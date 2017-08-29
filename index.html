@@ -40,74 +40,9 @@ Beautify Markers come from here https://github.com/marslan390/BeautifyMarker
     <body>
 
     <div id="map" class="map"></div>
-
+        hello python
     </body>
-    <script>
-        var map = L.map('map').setView([37.038, -95.00], 5);
-        var zippinLayerGroup = L.layerGroup().addTo(map);
-        var airportpinLayerGroup = L.layerGroup().addTo(map);
-        // here is a preview for each style https://leaflet-extras.github.io/leaflet-providers/preview/
-        var stamenLayer = L.tileLayer.provider('Stamen.Terrain').addTo(map);
-
-        function getPins(e){
-            bounds = map.getBounds();
-            zipurl = "ws/zips";
-
-
-            airporturl = "ws/airports";
-            $.get(zipurl, pinTheMapWithZip, "json")
-            $.get(airporturl, pinTheMapWithAirports, "json")
-        }
-
-        function pinTheMapWithAirports(dataObject) {
-
-            //Set up the icon
-            options = {
-                icon: 'plane',
-                borderColor: '#8D208B',
-                textColor: '#8D208B',
-                backgroundColor: 'transparent'
-            };
-
-            data = dataObject.results
-            //clear the current pins
-            map.removeLayer(airportpinLayerGroup);
-
-            //add the new pins
-            var markerArray = new Array(data.length)
-            for (var i = 0; i < data.length; i++) {
-                airportData = data[i];
-                markerArray[i] = L.marker([airportData.coords[1], airportData.coords[0]], {icon: L.BeautifyIcon.icon(options)}).bindPopup(airportData.name + "<br> Passengers: " + airportData.passengers);
-            }
-
-            airportpinLayerGroup = L.layerGroup(markerArray).addTo(map);
-        }
-
-        function pinTheMapWithZip(dataObject) {
-            options = {
-                iconShape: 'circle-dot',
-                borderWidth: 5,
-                borderColor: 'red'
-            };
-            data = dataObject.results
-            //clear the current pins
-            map.removeLayer(zippinLayerGroup);
-
-            //add the new pins
-            var markerArray = new Array(data.length)
-            for (var i = 0; i < data.length; i++) {
-                zipData = data[i];
-                markerArray[i] = L.marker([zipData.coords[1], zipData.coords[0]], { icon: L.BeautifyIcon.icon(options)}).bindPopup(zipData.zipcode + "<br> Number Attendees: " + zipData.count);
-            }
-
-            zippinLayerGroup = L.layerGroup(markerArray).addTo(map);
-        }
-
-        map.on('dragend', getPins);
-        map.on('zoomend', getPins);
-        map.whenReady(getPins)
-
-    </script>
+    
 
 </html>
 
