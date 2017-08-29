@@ -20,12 +20,12 @@ def getzips():
         print("couldn't make connection" + os.environ.get('DB_HOST'))
 
     cur = conn.cursor()
-    cur.execute("""select id, name, type from animal""")
+    cur.execute("""select intkey, stringkey from smalla""")
     rows = cur.fetchall()
 
     for row in rows:
         result = {}
-        result = {'id': row[0], 'name': row[1], 'type': row[2]}
+        result = {'intkey': row[0], 'stringkey': row[1]}
         results.append(result)
 
     return json.dumps({'results': list(results)})
